@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | VIRAT-7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #4f46e5, #6366f1, #8b5cf6);
+      animation: bgMove 8s infinite alternate;
+    }
+
+    @keyframes bgMove {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(30deg); }
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 18px;
+      padding: 28px 24px 30px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      animation: slideUp 0.6s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .field {
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px 44px 14px 14px;
+      border-radius: 12px;
+      border: 1.5px solid #ddd;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .field input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+    }
+
+    .field i {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+      font-size: 16px;
+    }
+
+    .login-btn {
+      width: 100%;
+      margin-top: 26px;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(79,70,229,0.4);
+    }
+
+    .footer-text {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .footer-text i {
+      color: #4f46e5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-card">
+    <div class="brand">
+      <h1>VIRAT-7</h1>
+      <p>Apartment Management Login</p>
+    </div>
+
+    <div class="field">
+      <input type="email" id="email" placeholder="Email address" />
+      <i class="fa-solid fa-envelope"></i>
+    </div>
+
+    <div class="field">
+      <input type="password" id="password" placeholder="Password" />
+      <i class="fa-solid fa-lock"></i>
+    </div>
+
+    <button class="login-btn" onclick="login()">Login</button>
+
+    <div class="footer-text">
+      <i class="fa-solid fa-circle-info"></i>
+      Contact admin if you forgot your password
+    </div>
+  </div>
+
+  <!-- Firebase Login -->
+  <script type="module">
+    import { auth } from "./js/firebase.js";
+    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    window.login = function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        alert("Please enter email and password");
+        return;
+      }
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "dashboard.html";
+        })
+        .catch(err => {
+          alert(err.message);
+        });
+    };
+  </script>
+
+</body>
+</html>

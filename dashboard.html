@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | VIRAT-7</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  
+  <link rel="stylesheet" href="../css/logout.css">
+  <link rel="stylesheet" href="../css/footer.css">
+
+  <!-- Base CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #f4f6fb;
+      color: #222;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-left img {
+      height: 36px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .bell {
+      position: relative;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .bell span {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: red;
+      color: white;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #5a67d8;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .menu-btn {
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* ================= DASHBOARD ================= */
+    main {
+      padding: 20px;
+    }
+
+    .user-info {
+      margin-bottom: 20px;
+    }
+
+    .user-info h3 {
+      font-size: 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card i {
+      font-size: 28px;
+      color: #5a67d8;
+      margin-bottom: 10px;
+    }
+
+    .card h4 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* ================= SIDE MENU ================= */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      z-index: 99;
+    }
+
+    .menu-overlay.show {
+      display: block;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100vh;
+      background: #fff;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.show {
+      transform: translateX(0);
+    }
+
+    .menu-top {
+      padding: 20px;
+      background: #5a67d8;
+      color: #fff;
+    }
+
+    .menu-top h4 {
+      margin-bottom: 4px;
+    }
+
+    .menu-list {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .menu-item {
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background: #f0f2ff;
+    }
+
+    .menu-item.logout {
+      background: #ffe5e5;
+      color: #c53030;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- OVERLAY -->
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <!-- SIDE MENU -->
+  <nav id="sideMenu" class="side-menu">
+    <div class="menu-top">
+      <h4>Saksham Sharma</h4>
+      <small>Flat G-1</small>
+    </div>
+
+    <div class="menu-list">
+      <div class="menu-item" onclick="goToPage('dashboard.html')">
+        <i class="fa-solid fa-house"></i> Dashboard
+      </div>
+      <div class="menu-item" onclick="goToPage('html/dues.html')">
+        <i class="fa-solid fa-wallet"></i> My Dues
+      </div>
+      <div class="menu-item" onclick="goToPage('html/bills.html')">
+        <i class="fa-solid fa-file-invoice"></i> Monthly Bills
+      </div>
+      <div class="menu-item" onclick="goToPage('html/notices.html')">
+        <i class="fa-solid fa-bullhorn"></i> Notice Board
+      </div>
+      <div class="menu-item" onclick="goToPage('html/profile.html')">
+        <i class="fa-solid fa-user"></i> Profile
+      </div>
+      <div class="menu-item" onclick="goToPage('html/admin.html')">
+        <i class="fa-solid fa-user-shield"></i> Admin Panel
+      </div>
+    </div>
+
+    <div class="menu-item logout" onclick="logout()">
+    <button id="logoutBtn" class="logout-btn">
+  🚪 Logout
+</button>
+    </div>
+  </nav>
+
+<!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <div class="app-logo">
+  VIRAT <span>7</span>
+</div>
+    </div>
+
+    <div class="header-right">
+      <div class="bell" onclick="goToPage('html/notifications.html')">
+        <i class="fa-solid fa-bell"></i>
+        <span id="bellCount">2</span>
+      </div>
+      <div class="avatar" id="headerAvatar" onclick="goToPage('html/profile.html')">S</div>
+      <div class="menu-btn" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+        <span id="bellCount" class="bell-badge"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="user-info">
+      <h3>Saksham Sharma</h3>
+      <small>Flat G-1</small>
+    </div>
+
+    <div class="cards">
+      <div class="card" onclick="goToPage('html/dues.html')">
+        <i class="fa-solid fa-wallet"></i>
+        <h4>My Dues</h4>
+        <p>Check pending dues</p>
+      </div>
+
+      <div class="card" onclick="goToPage('html/bills.html')">
+        <i class="fa-solid fa-file-invoice"></i>
+        <h4>Monthly Bills</h4>
+        <p>Maintenance & utilities</p>
+      </div>
+
+      <div class="card" onclick="goToPage('html/notices.html')">
+        <i class="fa-solid fa-bullhorn"></i>
+        <h4>Notice Board</h4>
+        <p>Society updates</p>
+      </div>
+
+      <div class="card" onclick="goToPage('html/profile.html')">
+        <i class="fa-solid fa-user"></i>
+        <h4>Profile</h4>
+        <p>Your details</p>
+      </div>
+      <!-- Complaints -->
+      <div class="card" onclick="goToPage('html/complaints.html')">
+         <i class="fa-solid fa-triangle-exclamation"></i>
+         <h4>Complaints</h4>
+         <p>Raise & track issues</p>
+       </div>
+
+<!-- Emergency -->
+       <div class="card" onclick="goToPage('html/emergency.html')">
+        <i class="fa-solid fa-phone-volume"></i>
+        <h4>Emergency</h4>
+        <p>Important contacts</p>
+       </div>
+    </div>
+  </main>
+
+  <!-- MENU SCRIPT -->
+  <script>
+    const sideMenu = document.getElementById("sideMenu");
+    const overlay = document.getElementById("menuOverlay");
+
+    function openMenu() {
+      sideMenu.classList.add("show");
+      overlay.classList.add("show");
+    }
+
+    function closeMenu() {
+      sideMenu.classList.remove("show");
+      overlay.classList.remove("show");
+    }
+
+    function toggleMenu() {
+      sideMenu.classList.contains("show") ? closeMenu() : openMenu();
+    }
+
+    overlay.addEventListener("click", closeMenu);
+
+    function goToPage(page) {
+      window.location.href = page;
+    }
+
+    function logout() {
+      window.location.href = "login.html";
+    }
+  </script>
+
+  <!-- FIREBASE AUTH GUARD -->
+  <script type="module">
+    import { auth } from "./js/firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+    import {
+  collection,
+  query,
+  where,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+onAuthStateChanged(auth, user => {
+  if (!user) return;
+
+  const q = query(
+    collection(db, "notifications"),
+    where("uid", "in", [user.uid, "all"]),
+    where("read", "==", false)
+  );
+
+  onSnapshot(q, snap => {
+    const bell = document.getElementById("bellCount");
+    bell.innerText = snap.size > 0 ? snap.size : "";
+  });
+});
+      }
+    });
+  </script>
+  
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    collection,
+    query,
+    where,
+    onSnapshot
+  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    // 🔴 YOUR CONFIG
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.replace("login.html");
+      return;
+    }
+
+    // USER DATA
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (snap.exists()) {
+      const d = snap.data();
+      headerName.innerText = d.name;
+      headerFlat.innerText = "Flat " + d.flat;
+      headerAvatar.innerText = d.name[0].toUpperCase();
+    }
+
+    // 🔔 NOTIFICATIONS
+    const q = query(
+      collection(db, "notifications"),
+      where("uid", "in", [user.uid, "all"]),
+      where("read", "==", false)
+    );
+
+    onSnapshot(q, snap => {
+      bellCount.innerText = snap.size > 0 ? snap.size : "";
+    });
+  });
+
+  // LOGOUT
+  window.logout = async () => {
+    await signOut(auth);
+    alert("Logged out");
+    window.location.replace("login.html");
+  };
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        // clear auth data
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // EXACT popup like your screenshot
+        alert("Logged out");
+
+        // redirect
+        window.location.replace("login.html");
+      });
+    }
+  });
+</script>
+
+</body>
+
+<footer class="app-footer">
+  <div class="footer-row">
+
+    <!-- LEFT : CONTACT DETAILS -->
+    <div class="footer-block left">
+      <h4>Contact Details</h4>
+      <p>Admin Name: Saksham Sharma</p>
+      <p>Email: admin@virat7.com</p>
+      <p>Contact: +91 93515xxxxx</p>
+      <p>
+        WhatsApp Group:
+        <a href="https://whatsapp.com/channel/0029VbBzCYX545uthpIC6N1q" target="_blank">Join</a>
+      </p>
+    </div>
+
+    <!-- CENTER : APARTMENT NAME -->
+    <div class="footer-block center">
+      <h3>VIRAT 7</h3>
+      <span>Made by Saksham Sharma</span>
+    </div>
+
+    <!-- RIGHT : LOGO IMAGE -->
+    <div class="footer-block right">
+      <img src="../assets/logo.png" alt="Apartment Logo" />
+    </div>
+
+  </div>
+</footer>
+</html> 

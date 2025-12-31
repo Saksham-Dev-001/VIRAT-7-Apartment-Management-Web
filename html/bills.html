@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Monthly Bills | VIRAT-7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/header.css">
+<link rel="stylesheet" href="../css/dues.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <button class="back-btn" id="backBtn">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <h3 class="page-title">Monthly Bills</h3>
+
+  <div class="header-spacer"></div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="dues-container">
+
+  <!-- MAINTENANCE -->
+  <div class="section">
+    <h4>Maintenance Bill</h4>
+    <div class="bill-row paid">
+      <span>August 2025</span>
+      <span>₹ 1,500 • PAID</span>
+    </div>
+  </div>
+
+  <!-- ELECTRICITY -->
+  <div class="section">
+    <h4>Electricity Bill</h4>
+    <div class="bill-row due">
+      <span>August 2025</span>
+      <span>₹ 600 • DUE</span>
+    </div>
+  </div>
+
+  <!-- WATER -->
+  <div class="section">
+    <h4>Water Bill</h4>
+    <div class="bill-row paid">
+      <span>August 2025</span>
+      <span>₹ 400 • PAID</span>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  document.getElementById("backBtn").addEventListener("click", () => {
+    if (history.length > 1) {
+      history.back();
+    } else {
+      window.location.href = "../dashboard.html";
+    }
+  });
+</script>
+
+</body>
+</html>

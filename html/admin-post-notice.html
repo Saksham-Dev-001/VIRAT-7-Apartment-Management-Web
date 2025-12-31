@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post Notice | VIRAT-7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="app-header">
+  <button class="back-btn" onclick="goBack()">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <h3 class="page-title">Post Notice</h3>
+
+  <div style="width:40px"></div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="admin-dashboard">
+
+  <!-- NOTICE FORM -->
+  <div class="admin-card notice-form">
+
+    <h4>Create New Notice</h4>
+
+    <!-- Title -->
+    <div class="form-group">
+      <label>Notice Title</label>
+      <input type="text" id="noticeTitle" placeholder="Enter notice title" />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label>Notice Description</label>
+      <textarea id="noticeMessage" rows="5"
+        placeholder="Enter notice details here..."></textarea>
+    </div>
+
+    <!-- Priority -->
+    <div class="form-group">
+      <label>Priority</label>
+      <select id="noticePriority">
+        <option value="normal">Normal</option>
+        <option value="urgent">Urgent</option>
+      </select>
+    </div>
+
+    <!-- Audience -->
+    <div class="form-group">
+      <label>Audience</label>
+      <select id="noticeAudience">
+        <option value="all">All Residents</option>
+        <option value="owners">Owners Only</option>
+        <option value="tenants">Tenants Only</option>
+      </select>
+    </div>
+
+    <!-- Action -->
+    <button class="primary-btn" onclick="publishNotice()">
+      <i class="fa-solid fa-paper-plane"></i> Publish Notice
+    </button>
+
+  </div>
+
+  <!-- RECENT NOTICES -->
+  <div class="admin-card">
+
+    <h4>Recent Notices</h4>
+
+    <div class="notice-item">
+      <div>
+        <strong>Water Supply Shutdown</strong>
+        <p>Water supply will be off on Sunday 8–11 AM.</p>
+      </div>
+      <span class="badge urgent">URGENT</span>
+    </div>
+
+    <div class="notice-item">
+      <div>
+        <strong>Maintenance Reminder</strong>
+        <p>Please pay August maintenance by 20th.</p>
+      </div>
+      <span class="badge normal">NORMAL</span>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- ================= JS ================= -->
+<script>
+  function goBack() {
+    history.length > 1
+      ? history.back()
+      : window.location.href = "admin.html";
+  }
+
+  function publishNotice() {
+    const title = document.getElementById("noticeTitle").value.trim();
+    const message = document.getElementById("noticeMessage").value.trim();
+
+    if (!title || !message) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    alert("Notice published successfully ✅");
+
+    // Clear form
+    document.getElementById("noticeTitle").value = "";
+    document.getElementById("noticeMessage").value = "";
+    document.getElementById("noticePriority").value = "normal";
+    document.getElementById("noticeAudience").value = "all";
+
+    // 🔜 Firebase logic will be added here later
+  }
+</script>
+
+</body>
+</html>

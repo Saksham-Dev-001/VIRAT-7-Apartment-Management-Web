@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Dues | VIRAT-7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Same dashboard CSS -->
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/dues.css">
+</head>
+
+<body>
+
+<!-- ===== HEADER (SAME STYLE) ===== -->
+<header class="app-header">
+  <button class="back-btn" id="backBtn">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <h3 class="page-title">My Dues</h3>
+
+  <!-- Spacer to keep title perfectly centered -->
+  <div class="header-spacer"></div>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="page-content">
+
+  <!-- Summary -->
+  <div class="total-due-card">
+  <div class="due-left">
+    <p class="label">Total Outstanding</p>
+    <h2>₹ 600</h2>
+
+    <span class="due-chip">Partially Paid</span>
+    <p class="due-note">For December 2025</p>
+  </div>
+
+  <div class="due-right">
+    <i class="fa-solid fa-wallet"></i>
+  </div>
+</div>
+
+  <!-- Dues List -->
+  <div class="dues-list">
+
+    <div class="bill-item paid">
+  <div class="bill-left">
+    <div class="bill-icon maintenance">
+      <i class="fa-solid fa-building"></i>
+    </div>
+
+    <div class="bill-details">
+      <h4>Maintenance</h4>
+      <p>December 2025</p>
+      <small>Paid on 10 Dec 2025</small>
+    </div>
+  </div>
+
+  <div class="bill-right">
+    <span class="status paid">PAID</span>
+    <strong>₹ 1,000</strong>
+  </div>
+</div>
+
+<div class="due-card electricity">
+
+  <div class="left">
+    <div class="icon electricity-icon">⚡</div>
+    <div class="info">
+      <h4>Electricity</h4>
+      <p>August 2025</p>
+      <small class="due-text">Due by 20 Jan 2026</small>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="amount"><strong>₹ 600</strong></div>
+
+    <button class="pay-btn"
+            data-type="Electricity"
+            data-amount="600">
+      Pay Now
+    </button>
+  </div>
+
+</div>
+
+    <div class="bill-item paid">
+  <div class="bill-left">
+    <div class="bill-icon water">
+      <i class="fa-solid fa-droplet"></i>
+    </div>
+
+    <div class="bill-details">
+      <h4>Water</h4>
+      <p>December 2025</p>
+      <small>Paid on 08 Dec 2025</small>
+    </div>
+  </div>
+
+  <div class="bill-right">
+    <span class="status paid">PAID</span>
+    <strong>₹ 400</strong>
+  </div>
+</div>
+
+  </div>
+
+</main>
+
+<!-- ===== FIREBASE LOGIC ===== -->
+<script type="module">
+import { auth, db } from "../js/firebase.js";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { onAuthStateChanged } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const container = document.getElementById("duesContainer");
+
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    window.location.href = "../login.html";
+    return;
+  }
+
+  const q = query(
+    collection(db, "dues"),
+    where("uid", "==", user.uid)
+  );
+
+  onSnapshot(q, snap => {
+    container.innerHTML = "";
+
+    if (snap.empty) {
+      container.innerHTML = `
+        <div class="card">
+          <i class="fa-solid fa-circle-check fa-2x"></i>
+          <h3>No Pending Dues</h3>
+          <p>You’re all clear 🎉</p>
+        </div>
+      `;
+      return;
+    }
+
+    snap.forEach(doc => {
+      const d = doc.data();
+      container.innerHTML += `
+        <div class="card">
+          <i class="fa-solid fa-wallet fa-2x"></i>
+          <h3>₹ ${d.amount}</h3>
+          <p>${d.month}</p>
+          <p>Status:
+            <strong style="color:${d.status === "paid" ? "green" : "red"}">
+              ${d.status}
+            </strong>
+          </p>
+        </div>
+      `;
+    });
+  });
+});
+</script>
+
+<script>
+  document.getElementById("backBtn").addEventListener("click", () => {
+    if (history.length > 1) {
+      history.back();
+    } else {
+      window.location.href = "../dashboard.html";
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".pay-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+
+        const amount = btn.dataset.amount;
+        const type = btn.dataset.type;
+
+        // TEMP action (until Razorpay)
+        alert(`Proceeding to pay ₹${amount} for ${type}`);
+
+        // 🔴 Razorpay will go here later
+        // openRazorpay(amount, type);
+
+      });
+    });
+
+  });
+</script>
+
+</body>
+</html>

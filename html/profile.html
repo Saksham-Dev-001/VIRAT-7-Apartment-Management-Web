@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile | VIRAT-7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/profile.css">
+
+  <style>
+    .profile-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      text-align: center;
+      max-width: 420px;
+      margin: auto;
+    }
+
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #5a67d8;
+      color: #fff;
+      font-size: 34px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      margin-bottom: 14px;
+    }
+
+    .profile-info {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .profile-info div {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #e53e3e;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <button class="back-btn" id="backBtn">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <h3 class="page-title">Profile</h3>
+
+  <!-- spacer to keep title centered -->
+  <div class="header-spacer"></div>
+</header>
+
+<!-- MAIN -->
+<main style="padding:20px">
+  <div class="profile-card">
+    <div class="profile-avatar" id="avatar">S</div>
+    <h3 id="pName">Saksham Sharma</h3>
+    <small id="pRole">Admin</small>
+
+    <div class="profile-info">
+  <div>
+    <i class="fa-solid fa-envelope"></i>
+    <span id="pEmail"><strong>admin@virat7.com</strong></span>
+  </div>
+  <div>
+    <i class="fa-solid fa-house"></i>
+    <span><strong>Flat</strong> <b id="pFlat"><strong>G-1</strong></b></span>
+  </div>
+  <div>
+    <i class="fa-solid fa-phone"></i>
+    <span id="pPhone"><strong>+91 93515XXXXX</strong></span>
+  </div>
+</div>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+
+</main>
+
+<!-- SCRIPT -->
+<script type="module">
+  import { auth, db } from "../js/firebase.js";
+  import { onAuthStateChanged, signOut }
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { doc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // WAIT FOR DOM (THIS IS THE FIX)
+  window.addEventListener("DOMContentLoaded", () => {
+
+    const backBtn = document.getElementById("backBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // SAFETY CHECK
+    if (!backBtn || !logoutBtn) {
+      console.error("Buttons not found in DOM");
+      return;
+    }
+
+    // BACK BUTTON
+    backBtn.addEventListener("click", () => {
+      if (document.referrer) {
+        history.back();
+      } else {
+        window.location.href = "../dashboard.html";
+      }
+    });
+
+    // LOGOUT BUTTON
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        alert("Logged out");
+        window.location.replace("/login.html");
+      } catch (err) {
+        console.error(err);
+        alert("Logout failed");
+      }
+    });
+
+    // LOAD USER
+    onAuthStateChanged(auth, async user => {
+      if (!user) {
+        window.location.replace("../login.html");
+        return;
+      }
+
+      document.getElementById("pEmail").innerText = user.email;
+
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (!snap.exists()) return;
+
+      const d = snap.data();
+      document.getElementById("pName").innerText = d.name || "User";
+      document.getElementById("pRole").innerText = d.role || "Resident";
+      document.getElementById("pFlat").innerText = d.flat || "-";
+      document.getElementById("pPhone").innerText = d.phone || "-";
+      document.getElementById("avatar").innerText =
+        (d.name || "U")[0].toUpperCase();
+    });
+
+  });
+</script>
+
+<script type="module">
+  import { auth } from "../js/firebase.js";
+  import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  // BACK BUTTON (ABSOLUTE, RELIABLE)
+  document.getElementById("backBtn").addEventListener("click", () => {
+    window.location.href = "../dashboard.html";
+  });
+
+  // LOGOUT BUTTON (WORKING)
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      alert("Logged out");
+      window.location.replace("../login.html");
+    } catch (err) {
+      console.error("Logout failed:", err);
+      alert("Logout failed");
+    }
+  });
+</script>
+
+</body>
+</html>

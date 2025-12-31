@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Emergency | VIRAT-7</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Poppins, sans-serif;
+      background: #f4f6fb;
+    }
+
+    /* HEADER */
+    .app-header {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: #f0f2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .title {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* CONTENT */
+    main {
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .emergency-card {
+      background: #fff;
+      padding: 18px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+      cursor: pointer;
+    }
+
+    .emergency-card i {
+      font-size: 22px;
+      width: 36px;
+      text-align: center;
+      color: #5a67d8;
+    }
+
+    .emergency-card strong {
+      font-size: 16px;
+      display: block;
+    }
+
+    .emergency-card span {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .danger i { color: #e53e3e; }
+    .whatsapp i { color: #25D366; }
+  </style>
+</head>
+
+<body>
+
+<header class="app-header">
+  <button class="back-btn" onclick="history.back()">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  <div class="title">Emergency</div>
+  <div style="width:40px"></div>
+</header>
+
+<main>
+
+  <!-- ADMIN -->
+  <div class="emergency-card danger" onclick="callNumber('+9193515XXXXX')">
+    <i class="fa-solid fa-user"></i>
+    <div>
+      <strong>Call Admin</strong>
+      <span>Apartment management</span>
+    </div>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="emergency-card danger" onclick="callNumber('+9193515XXXXX')">
+    <i class="fa-solid fa-user-shield"></i>
+    <div>
+      <strong>Call Security</strong>
+      <span>Gate & guards</span>
+    </div>
+  </div>
+
+  <!-- WHATSAPP -->
+  <div class="emergency-card whatsapp" onclick="openWhatsApp()">
+    <i class="fa-brands fa-whatsapp"></i>
+    <div>
+      <strong>Society WhatsApp</strong>
+      <span>Instant help from residents</span>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function callNumber(number) {
+    window.location.href = `tel:${number}`;
+  }
+
+  function openWhatsApp() {
+    window.open(
+      "https://whatsapp.com/channel/0029VbBzCYX545uthpIC6N1q",
+      "_blank"
+    );
+  }
+</script>
+
+</body>
+</html>

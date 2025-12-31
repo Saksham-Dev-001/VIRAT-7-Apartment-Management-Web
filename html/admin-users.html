@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Users | Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="app-header">
+  <button class="back-btn" onclick="goBack()">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <h3 class="page-title">Manage Users</h3>
+
+  <div style="width:40px"></div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main class="admin-dashboard">
+
+  <!-- USER CARD -->
+  <div class="admin-card user-card">
+    <div class="user-info">
+      <h4>Saksham Sharma</h4>
+      <p>Flat: G-1</p>
+    </div>
+
+    <button class="status-btn block" onclick="toggleUser(this)">
+      Block
+    </button>
+  </div>
+
+  <!-- USER CARD -->
+  <div class="admin-card user-card">
+    <div class="user-info">
+      <h4>User 2</h4>
+      <p>Flat: A-3</p>
+    </div>
+
+    <button class="status-btn active" onclick="toggleUser(this)">
+      Active
+    </button>
+  </div>
+
+</main>
+
+<!-- ================= JS ================= -->
+<script>
+  function goBack() {
+    history.length > 1
+      ? history.back()
+      : window.location.href = "admin.html";
+  }
+
+  function toggleUser(btn) {
+    if (btn.classList.contains("active")) {
+      btn.classList.remove("active");
+      btn.classList.add("block");
+      btn.innerText = "Block";
+      alert("User has been blocked");
+    } else {
+      btn.classList.remove("block");
+      btn.classList.add("active");
+      btn.innerText = "Active";
+      alert("User has been activated");
+    }
+
+    // 🔜 Firebase update will be added here
+  }
+</script>
+
+</body>
+</html>
