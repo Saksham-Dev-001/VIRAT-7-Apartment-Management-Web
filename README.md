@@ -34,4 +34,4 @@ VIRAT-7 provides a single, secure platform for residents and administrators to m
 • Real-world impact
 
 👨‍💻 Team / Author
-> Saksham Sharma
+• Saksham Sharma
